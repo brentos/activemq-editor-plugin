@@ -24,6 +24,6 @@ to the deploy directory of Apache Tomcat os similar Java web container.
 
 From the CLI type:
 
-    install -s mvn:io.hawt/simple-plugin/1.5-SNAPSHOT/war
+    install -s mvn:io.hawt/activemq-editor/1.5-SNAPSHOT/war
 
 (substitute 1.5-SNAPSHOT with the version of choice)
