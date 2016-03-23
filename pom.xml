@@ -55,12 +55,14 @@
 
     <!-- we only need to embed this dependency in the war, this contains
       a nice helper class that our plugin can use to export it's plugin
-      mbean -->
+      mbean 
     <dependency>
       <groupId>io.hawt</groupId>
       <artifactId>hawtio-plugin-mbean</artifactId>
       <version>${project.version}</version>
     </dependency>
+    
+    -->
 
     <!-- servlet API is provided by the container -->
     <dependency>
