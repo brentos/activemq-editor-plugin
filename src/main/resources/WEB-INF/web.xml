@@ -5,8 +5,8 @@
 	      http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
 	      version="2.4">
 
-  <description>Simple hawtio hello-world type plugin</description>
-  <display-name>hawt.io simple plugin</display-name>
+  <description>AMQ Editor</description>
+  <display-name>AMQ Editor</display-name>
 
   <context-param>
     <description>Plugin's path on the server</description>

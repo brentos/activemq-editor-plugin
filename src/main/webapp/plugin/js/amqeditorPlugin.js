@@ -1,11 +1,11 @@
 /**
- * @module Simple
- * @mail Simple
+ * @module AmqEditor
+ * @mail AmqEditor
  *
- * The main entry point for the Simple module
+ * The main entry point for the AmqEditor module
  *
  */
-var Simple = (function(Simple) {
+var AmqEditor = (function(AmqEditor) {
 
   /**
    * @property pluginName
@@ -13,7 +13,7 @@ var Simple = (function(Simple) {
    *
    * The name of this plugin
    */
-  Simple.pluginName = 'simple_plugin';
+  AmqEditor.pluginName = 'amqeditor_plugin';
 
   /**
    * @property log
@@ -21,7 +21,7 @@ var Simple = (function(Simple) {
    *
    * This plugin's logger instance
    */
-  Simple.log = Logger.get('Simple');
+  AmqEditor.log = Logger.get('AmqEditor');
 
   /**
    * @property contextPath
@@ -30,7 +30,7 @@ var Simple = (function(Simple) {
    * The top level path of this plugin on the server
    *
    */
-  Simple.contextPath = "/simple-plugin/";
+  AmqEditor.contextPath = "/amqeditor-plugin/";
 
   /**
    * @property templatePath
@@ -38,7 +38,7 @@ var Simple = (function(Simple) {
    *
    * The path to this plugin's partials
    */
-  Simple.templatePath = Simple.contextPath + "plugin/html/";
+  AmqEditor.templatePath = AmqEditor.contextPath + "plugin/html/";
 
   /**
    * @property module
@@ -49,7 +49,7 @@ var Simple = (function(Simple) {
    * workspace, viewRegistry and layoutFull used by the
    * run function
    */
-  Simple.module = angular.module('simple_plugin', ['hawtioCore'])
+  AmqEditor.module = angular.module('amqeditor_plugin', ['hawtioCore'])
       .config(function($routeProvider) {
 
         /**
@@ -59,8 +59,8 @@ var Simple = (function(Simple) {
          * routeProvider has been configured with.
          */
         $routeProvider.
-            when('/simple_plugin', {
-              templateUrl: Simple.templatePath + 'simple.html'
+            when('/amqeditor_plugin', {
+              templateUrl: AmqEditor.templatePath + 'amqeditor.html'
             });
       });
 
@@ -77,15 +77,15 @@ var Simple = (function(Simple) {
    *     plugin.  This is just a matter of adding to the workspace's
    *     topLevelTabs array.
    */
-  Simple.module.run(function(workspace, viewRegistry, layoutFull) {
+  AmqEditor.module.run(function(workspace, viewRegistry, layoutFull) {
 
-    Simple.log.info(Simple.pluginName, " loaded");
+    AmqEditor.log.info(AmqEditor.pluginName, " loaded");
 
-    Core.addCSS(Simple.contextPath + "plugin/css/simple.css");
+    Core.addCSS(AmqEditor.contextPath + "plugin/css/amqeditor.css");
 
     // tell the app to use the full layout, also could use layoutTree
     // to get the JMX tree or provide a URL to a custom layout
-    viewRegistry["simple_plugin"] = layoutFull;
+    viewRegistry["amqeditor_plugin"] = layoutFull;
 
     /* Set up top-level link to our plugin.  Requires an object
        with the following attributes:
@@ -110,29 +110,30 @@ var Simple = (function(Simple) {
                     route.
      */
     workspace.topLevelTabs.push({
-      id: "simple",
-      content: "Simple",
-      title: "Simple plugin loaded dynamically",
+      id: "amqeditor",
+      content: "AMQ Editor",
+      title: "AMQ Editor",
       isValid: function(workspace) { return true; },
-      href: function() { return "#/simple_plugin"; },
-      isActive: function(workspace) { return workspace.isLinkActive("simple_plugin"); }
+      href: function() { return "#/amqeditor_plugin"; },
+      isActive: function(workspace) { return workspace.isLinkActive("amqeditor_plugin"); }
 
     });
 
   });
 
   /**
-   * @function SimpleController
+   * @function AmqEditorController
    * @param $scope
    * @param jolokia
    *
-   * The controller for simple.html, only requires the jolokia
+   * The controller for amqeditor.html, only requires the jolokia
    * service from hawtioCore
    *
    */
-  Simple.SimpleController = function($scope, jolokia) {
+  AmqEditor.AmqEditorController = function($scope, jolokia) {
     $scope.hello = "Hello world!";
     $scope.cpuLoad = "0";
+    $scope.updateResult = {};
 
     // register a watch with jolokia on this mbean to
     // get updated metrics
@@ -146,12 +147,16 @@ var Simple = (function(Simple) {
       $scope.cpuLoad = response.value['ProcessCpuLoad'];
       Core.$apply($scope);
     }
+    
+    $scope.reloadAMQ = function() {
+    	$scope.updateResult = jolokia.execute("org.apache.activemq:brokerName=amq,name=Plugin,service=RuntimeConfiguration,type=Broker", "updateNow()");
+    }
   };
 
-  return Simple;
+  return AmqEditor;
 
-})(Simple || {});
+})(AmqEditor || {});
 
 // tell the hawtio plugin loader about our plugin so it can be
 // bootstrapped with the rest of angular
-hawtioPluginLoader.addModule(Simple.pluginName);
+hawtioPluginLoader.addModule(AmqEditor.pluginName);

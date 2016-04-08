@@ -28,12 +28,13 @@
     <maven-resources-plugin-version>2.6</maven-resources-plugin-version>
     <maven-bundle-plugin-version>2.3.7</maven-bundle-plugin-version>
     <war-plugin-version>2.1.1</war-plugin-version>
+    <jaxb-basics-version>0.6.4</jaxb-basics-version>
   
     <!-- filtered plugin properties, we don't define plugin-scripts here
       as we build that dynamically using maven-antrun-plugin below. -->
     <!-- plugin-context is what context this plugin will handle requests on
       in the application server -->
-    <plugin-context>/simple-plugin</plugin-context>
+    <plugin-context>/amqeditor-plugin</plugin-context>
 
     <!-- plugin-name is the name of our plugin, affects the name used for
       the plugin's mbean -->
@@ -82,6 +83,26 @@
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-log4j12</artifactId>
       <version>${slf4j-version}</version>
+    </dependency>
+    
+    <dependency>
+    	<groupId>org.apache.activemq</groupId>
+    	<artifactId>activemq-broker</artifactId>
+    	<version>5.11.0.redhat-621084</version>
+    </dependency>
+    
+    <dependency>
+      <groupId>org.jvnet.jaxb2_commons</groupId>
+      <artifactId>jaxb2-basics-runtime</artifactId>
+      <version>${jaxb-basics-version}</version>
+    </dependency>
+
+    <!-- TODO: update the junit dependency -->
+    <dependency>
+    	<groupId>junit</groupId>
+    	<artifactId>junit</artifactId>
+    	<version>4.12</version>
+    	<scope>test</scope>
     </dependency>
 
   </dependencies>
